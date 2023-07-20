@@ -29,11 +29,13 @@ fun ZoomableImageScreen(
     imageUrl: String,
     onBack: () -> Unit
 ) {
+    val initialScale = 1f
     val scale = remember { mutableStateOf(1f) }
     val offsetX = remember { Animatable(0f) }
     val offsetY = remember { Animatable(0f) }
 
     val coroutineScope = rememberCoroutineScope()
+
 
 
     Box(
@@ -46,16 +48,19 @@ fun ZoomableImageScreen(
                 .fillMaxSize()
                 .pointerInput(Unit) {
                     detectTransformGestures { _, pan, gestureZoom, _ ->
-                        scale.value *= gestureZoom
-                        if (scale.value > 1f) {
-                            coroutineScope.launch {
-                                offsetX.snapTo(offsetX.value + pan.x)
-                                offsetY.snapTo(offsetY.value + pan.y)
-                            }
-                        } else {
-                            coroutineScope.launch {
-                                offsetX.animateTo(0f)
-                                offsetY.animateTo(0f)
+                        val newScale = scale.value * gestureZoom
+                        if (newScale >= initialScale) {
+                            scale.value = newScale
+                            if (scale.value > initialScale) {
+                                coroutineScope.launch {
+                                    offsetX.snapTo(offsetX.value + pan.x)
+                                    offsetY.snapTo(offsetY.value + pan.y)
+                                }
+                            } else {
+                                coroutineScope.launch {
+                                    offsetX.animateTo(0f)
+                                    offsetY.animateTo(0f)
+                                }
                             }
                         }
                     }
