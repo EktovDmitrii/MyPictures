@@ -1,6 +1,7 @@
 package com.example.mypictures.presentation
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypictures.domain.GetAllPhotoUseCase
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PhotoViewModel @Inject constructor(
     private val getAllPhotoUseCase: GetAllPhotoUseCase,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private var currentPage = 1

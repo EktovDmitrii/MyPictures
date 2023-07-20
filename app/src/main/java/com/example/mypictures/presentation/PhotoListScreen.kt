@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,11 +18,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.mypictures.domain.models.Photo
+import com.example.mypictures.R
 
 @Composable
 fun PhotoListScreen() {
-    val viewModel: PhotoViewModel = viewModel()
+    val viewModel: PhotoViewModel = viewModel(
+        key = "photoViewModelKey"
+    )
     val photosState by viewModel.photosState.collectAsState()
 
     val lazyListState = rememberLazyGridState()
@@ -38,7 +43,9 @@ fun PhotoListScreen() {
         Surface(modifier = Modifier.fillMaxSize()) {
             when (val state = photosState) {
                 is PhotoViewState.Loading -> {
-                    CircularProgressIndicator(modifier = Modifier.wrapContentSize())
+                    val composition = rememberLottieComposition(
+                        spec = LottieCompositionSpec.RawRes(R.raw.animation_lkb6c8yq))
+                        LottieAnimation(composition = composition.value, modifier = Modifier.wrapContentSize())
                 }
                 is PhotoViewState.Success -> {
                     LazyVerticalGrid(
