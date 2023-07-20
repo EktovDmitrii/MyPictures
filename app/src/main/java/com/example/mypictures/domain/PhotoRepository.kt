@@ -4,5 +4,5 @@ import com.example.mypictures.domain.models.Photo
 
 interface PhotoRepository {
 
-    suspend fun getAllPhotos() : List<Photo>
+    suspend fun getAllPhotos(apiKey: String, page: Int, perPage: Int) : List<Photo>
 }

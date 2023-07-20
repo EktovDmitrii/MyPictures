@@ -9,8 +9,8 @@ class PhotoRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : PhotoRepository {
 
-    override suspend fun getAllPhotos(): List<Photo> {
-        return apiService.getPhotoList().map {
+    override suspend fun getAllPhotos(apiKey: String, page: Int, perPage: Int): List<Photo> {
+        return apiService.getPhotoList(apiKey, page, perPage).map {
             Photo(
                 id = it.id,
                 urlList = PhotoUrl(
