@@ -10,10 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,28 +18,31 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.mypictures.navigation.Screens
 import kotlinx.coroutines.launch
 
 @Composable
 fun ZoomableImageScreen(
-    imageUrl: String,
-    onBack: () -> Unit
+    navController: NavController,
 ) {
+    val viewModel: PhotoViewModel = hiltViewModel()
+    val photoUrl by viewModel.photoUrl.collectAsState()
+
+
     val initialScale = 1f
     val scale = remember { mutableStateOf(1f) }
     val offsetX = remember { Animatable(0f) }
     val offsetY = remember { Animatable(0f) }
-
     val coroutineScope = rememberCoroutineScope()
-
-
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = rememberImagePainter(imageUrl),
+            painter = rememberImagePainter(photoUrl.toString()),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
@@ -74,7 +74,7 @@ fun ZoomableImageScreen(
             contentScale = ContentScale.Fit,
         )
         IconButton(
-            onClick = onBack,
+            onClick = { navController.navigate(Screens.PhotoList.route) },
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.TopStart)
