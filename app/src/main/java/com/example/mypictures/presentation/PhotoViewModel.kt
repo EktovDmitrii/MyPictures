@@ -20,8 +20,8 @@ class PhotoViewModel @Inject constructor(
 
     private var currentPage = 1
     private val perPage = 20
-//    private val apiKey = "XMwtmLsFSbNB-oGlyH7BlMdsTL-gVGXHQaMOSPUH7ew"
-    private val apiKey = "SnsTfVwPVzPkbM6dmIqQR23ZP3dyHNrm4wXOWCydeow"
+    private val apiKey = "XMwtmLsFSbNB-oGlyH7BlMdsTL-gVGXHQaMOSPUH7ew"
+//    private val apiKey = "SnsTfVwPVzPkbM6dmIqQR23ZP3dyHNrm4wXOWCydeow"
 
 
     private val _photosState = MutableStateFlow<PhotoViewState>(PhotoViewState.Loading)
