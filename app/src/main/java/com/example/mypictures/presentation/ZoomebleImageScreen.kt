@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.mypictures.R
 import com.example.mypictures.navigation.Screens
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,9 @@ fun ZoomableImageScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = rememberImagePainter(photoUrl.toString()),
+            painter = rememberImagePainter(
+                data = photoUrl.toString(),
+                builder = { placeholder(R.drawable.baseline_image_24) }),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
